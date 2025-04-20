@@ -14,3 +14,16 @@ In your Flarum root directory, run the following command:
 
 ```bash
 composer require peopleinside/flarum-ext-antiflood
+```
+
+### 2. Update via Composer
+
+```bash
+composer update peopleinside/flarum-ext-antiflood
+```
+
+### 3. Unistall via Composer
+
+```bash
+composer remove peopleinside/flarum-ext-antiflood
+```
