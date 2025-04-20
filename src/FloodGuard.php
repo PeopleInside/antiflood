@@ -13,7 +13,7 @@ use Flarum\User\Exception\PermissionDeniedException;
 
 class FloodGuard
 {
-    protected $maxPending = 4;
+    protected $maxPending = 6;
     protected $floodLimit = 3;
     protected $floodIntervalMinutes = 5;
 
