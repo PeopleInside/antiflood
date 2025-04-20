@@ -13,4 +13,4 @@
 In your Flarum root directory, run the following command:
 
 ```bash
-composer require peopleinside/antiflood
+composer require peopleinside/flarum-ext-antiflood
