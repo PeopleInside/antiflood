@@ -16,7 +16,7 @@ class FloodGuard
 {
     protected $maxPending = 4;
     protected $floodLimit = 3;
-    protected $floodIntervalMinutes = 10;
+    protected $floodIntervalMinutes = 5;
 
     protected $translator;
 
