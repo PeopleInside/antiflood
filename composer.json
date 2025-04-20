@@ -1,5 +1,5 @@
 {
-    "name": "peopleinside/antiflood",
+    "name": "peopleinside/flarum-ext-antiflood",
     "description": "Flarum extension to prevent topic/post flooding and limit pending approvals.",
     "type": "flarum-extension",
     "keywords": ["flarum", "antiflood", "approval"],
@@ -7,7 +7,7 @@
     "authors": [
         {
             "name": "Peopleinside",
-            "email": "example@example.com"
+            "website": "https://github.com/PeopleInside/flarum-ext-antiflood"
         }
     ],
     "require": {
