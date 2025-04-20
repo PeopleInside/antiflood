@@ -10,12 +10,20 @@ use Flarum\Discussion\Event\Saving as DiscussionSaving;
 use Flarum\Post\Event\Saving as PostSaving;
 use Illuminate\Support\Arr;
 use Flarum\User\Exception\PermissionDeniedException;
+use Flarum\Locale\TranslatorInterface;
 
 class FloodGuard
 {
     protected $maxPending = 4;
     protected $floodLimit = 3;
     protected $floodIntervalMinutes = 10;
+
+    protected $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
 
     public function handleDiscussionSaving(DiscussionSaving $event)
     {
@@ -47,20 +55,36 @@ class FloodGuard
             ->count();
 
         if (($pendingPosts + $pendingDiscussions) >= $this->maxPending) {
-            throw new PermissionDeniedException(app('translator')->trans('peopleinside-antiflood.forum.error.pending_limit'));
+            throw new PermissionDeniedException(
+                $this->translator->trans('peopleinside-antiflood.forum.error.pending_limit')
+            );
         }
     }
 
     protected function checkFlooding(User $actor, string $model)
     {
+        $floodInterval = Carbon::now()->subMinutes($this->floodIntervalMinutes);
+
         $recentCount = $model::where('user_id', $actor->id)
-            ->where('created_at', '>=', Carbon::now()->subMinutes($this->floodIntervalMinutes))
+            ->where('created_at', '>=', $floodInterval)
             ->count();
 
         if ($recentCount >= $this->floodLimit) {
-            throw new PermissionDeniedException(app('translator')->trans('peopleinside-antiflood.forum.error.flood_limit', [
-                'minutes' => $this->floodIntervalMinutes
-            ]));
+            $lastPostTime = $model::where('user_id', $actor->id)
+                ->orderBy('created_at', 'desc')
+                ->first()?->created_at;
+
+            $remainingMinutes = $lastPostTime
+                ? max(1, $this->floodIntervalMinutes - Carbon::parse($lastPostTime)->diffInMinutes())
+                : $this->floodIntervalMinutes;
+
+            throw new PermissionDeniedException(
+                $this->translator->trans('peopleinside-antiflood.forum.error.flood_limit', [
+                    '{count}' => $this->floodLimit,
+                    '{minutes}' => $this->floodIntervalMinutes,
+                    '{remaining}' => $remainingMinutes,
+                ])
+            );
         }
     }
 }
