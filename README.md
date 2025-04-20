@@ -4,7 +4,7 @@
 
 ## Features
 - Limits the creation of **maximum 3 topics per 5 minutes** for each user.
-- Blocks topic/post creation if there are already **3 posts or topics pending approval**.
+- Blocks topic/post creation if there are already **5 posts or topics pending approval**.
 
 ## Installation
 
