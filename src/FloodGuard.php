@@ -10,7 +10,7 @@ use Flarum\Discussion\Event\Saving as DiscussionSaving;
 use Flarum\Post\Event\Saving as PostSaving;
 use Illuminate\Support\Arr;
 use Flarum\User\Exception\PermissionDeniedException;
-use Flarum\Locale\TranslatorInterface;
+use Flarum\Locale\Translator;
 
 class FloodGuard
 {
@@ -20,7 +20,8 @@ class FloodGuard
 
     protected $translator;
 
-    public function __construct(TranslatorInterface $translator)
+
+    public function __construct(Translator $translator)
     {
         $this->translator = $translator;
     }
