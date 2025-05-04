@@ -27,3 +27,4 @@ composer update peopleinside/flarum-ext-antiflood
 ```bash
 composer remove peopleinside/flarum-ext-antiflood
 ```
+Packagist link: https://packagist.org/packages/peopleinside/flarum-ext-antiflood
